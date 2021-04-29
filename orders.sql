@@ -46,7 +46,7 @@ INSERT INTO `deliveries` (`delivery_id`, `location`, `status_id`, `order_id`) VA
 -- Dumping data for table `items`
 --
 
-INSERT INTO `items` (`line_item_id`, `item_code`, `description`, `quantity`, `order_id`) VALUES
+INSERT INTO `items` (`item_id`, `item_code`, `description`, `quantity`, `order_id`) VALUES
 (1, '123', 'IPhone 10X', 1, 1);
 
 -- --------------------------------------------------------
@@ -96,13 +96,13 @@ INSERT INTO `statuses` (`status_id`, `value`, `created_at`) VALUES
 -- AUTO_INCREMENT for table `deliveries`
 --
 ALTER TABLE `deliveries`
-  MODIFY `delivery_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `delivery_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `line_item_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `item_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `orders`
