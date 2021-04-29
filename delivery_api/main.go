@@ -18,6 +18,8 @@ func main() {
 	router.HandleFunc("/orders", CreateOrder).Methods("POST")
 	// Read
 	router.HandleFunc("/orders/{orderId}", getOrder).Methods("GET")
+	// Update
+	router.HandleFunc("/orders/{deliveryId}", updateOrder).Methods("PUT")
 	InitDB()
 
 	log.Fatal(http.ListenAndServe(":8080", router))
