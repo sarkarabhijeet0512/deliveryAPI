@@ -20,16 +20,15 @@ func getPost(w http.ResponseWriter, r *http.Request) {
 		Where("orders.order_id=?", params["orderId"]).Find(&status).Error
 	if err != nil {
 		if gorm.IsRecordNotFoundError(err) {
-			w.Write([]byte(`{"message":"` + err.Error() + `"}`))
-		} else {
-			res := make(map[string]interface{})
-			res["customer_name"] = status.CustomerName
-			res["contact_no"] = status.MobileNumber
-			res["delivery_status"] = status.Value
-			res["location"] = status.Location
-
-			des, _ := json.Marshal(res)
-			w.Write([]byte(des))
+			w.Write([]byte(`{"response":"` + "no data found" + `"}`))
 		}
+	} else {
+		res := make(map[string]interface{})
+		res["customer_name"] = status.CustomerName
+		res["contact_no"] = status.MobileNumber
+		res["delivery_status"] = status.Value
+		res["location"] = status.Location
+		des, _ := json.Marshal(res)
+		w.Write([]byte(des))
 	}
 }
