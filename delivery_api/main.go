@@ -38,20 +38,38 @@ func getOrder(w http.ResponseWriter, r *http.Request) {
 
 	var results Demo
 	//do error handling
-	db.Table("orders").Select("*").
+	err := db.Table("orders").Select("*").
 		Joins("JOIN items on items.order_id=orders.order_id").
 		Joins("JOIN deliveries on deliveries.order_id=orders.order_id").
 		Joins("JOIN statuses on statuses.status_id=deliveries.status_id").
-		Where("orders.order_id=?", params["orderId"]).Find(&results)
-	json.NewEncoder(w).Encode(results)
+		Where("orders.order_id=?", params["orderId"]).Find(&results).Error
+	if err != nil {
+		if gorm.IsRecordNotFoundError(err) {
+			w.Write([]byte(`{"response":"` + "no data found" + `"}`))
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(`{"response":"` + "oops! something went wrong! Try again" + `"}`))
+		}
+	} else {
+		json.NewEncoder(w).Encode(results)
+	}
 }
 func getAllOrders(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var results []Demo
-	db.Table("orders").Select("*").
+	err := db.Table("orders").Select("*").
 		Joins("JOIN items on items.order_id=orders.order_id").
 		Joins("JOIN deliveries on deliveries.order_id=orders.order_id").
 		Joins("JOIN statuses on statuses.status_id=deliveries.status_id").
-		Find(&results)
-	json.NewEncoder(w).Encode(results)
+		Find(&results).Error
+	if err != nil {
+		if gorm.IsRecordNotFoundError(err) {
+			w.Write([]byte(`{"response":"` + "no data found" + `"}`))
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(`{"response":"` + "oops! something went wrong! Try again" + `"}`))
+		}
+	} else {
+		json.NewEncoder(w).Encode(results)
+	}
 }

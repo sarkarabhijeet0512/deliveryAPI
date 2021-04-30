@@ -10,8 +10,8 @@ func InitDB() {
 	var err error
 	dataSourceName := "root:@tcp(localhost:3306)/?parseTime=True"
 	db, err = gorm.Open("mysql", dataSourceName)
-	// On the log mod for sql queries in console
-	db.LogMode(true)
+	//uncomment  On the log mod for sql queries in console
+	// db.LogMode(true)
 	if err != nil {
 		fmt.Println(err)
 		panic("failed to connect database")
