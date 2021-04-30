@@ -24,7 +24,7 @@ func main() {
 	// Update
 	router.HandleFunc("/orders/{deliveryId}", updateOrder).Methods("PUT")
 	// Getall Orders
-	router.HandleFunc("/orders/all", getOrders).Methods("GET")
+	router.HandleFunc("/orders/all/", getAllOrders).Methods("GET")
 	//getdelivery status for delivery partners
 	router.HandleFunc("/orders/delivery/status/{orderId}", getPost).Methods("GET")
 	InitDB()
@@ -45,7 +45,7 @@ func getOrder(w http.ResponseWriter, r *http.Request) {
 		Where("orders.order_id=?", params["orderId"]).Find(&results)
 	json.NewEncoder(w).Encode(results)
 }
-func getOrders(w http.ResponseWriter, r *http.Request) {
+func getAllOrders(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var results []Demo
 	db.Table("orders").Select("*").
